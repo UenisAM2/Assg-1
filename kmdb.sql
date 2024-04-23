@@ -112,30 +112,31 @@
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
-    DROP movie_data,
-    DROP actor_data,
-    DROP casting_data;
+
+DROP TABLE movie_data;
+DROP TABLE actor_data;
+DROP TABLE casting_data;
 
 -- Create new tables, according to your domain model
 -- TODO!
     CREATE TABLE movie_data (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
+        title_movie TEXT,
         movie_year INTEGER, 
-        MPAA TEXT,
+        MPAA_rating TEXT,
         studio_name TEXT
      );
 
      CREATE TABLE actor_data (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        actor_name TEXT,
+        actor_nm TEXT,
         character_name TEXT
      );
 
      CREATE TABLE casting_data (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        actor_name TEXT,
-        movie_name TEXT
+        movie_name TEXT,
+        actor_name TEXT
              )
         ;
 
@@ -143,13 +144,13 @@
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
 
-INSERT INTO movie_data (title, movie_year, MPAA, studio_name)
+INSERT INTO movie_data (title_movie, movie_year, MPAA_rating, studio_name)
 VALUES
     ("Batman Begins", 2005, "PG-13", "Warner Bros"),
     ("The Dark  Knight", 2008, "PG-13", "Warner Bros"),
     ("The Dark  Knight Rises", 2012, "PG-13", "Warner Bros");
 
-INSERT INTO actor_data (actor_name, character_name)
+INSERT INTO actor_data (actor_nm, character_name)
 VALUES
 ("Christian Bale", "Bruce Wayne"), 
 ("Michael Caine", "Alfred"),
@@ -161,9 +162,9 @@ VALUES
 ("Maggie Gyllenhaal", "Rachel Dawes"),
 ("Tom Hardy", "Bane"),
 ("Joseph Gordon-Levitt", "John Blake"),
-("Anne Hathaway" "Selina Kyle");
+("Anne Hathaway", "Selina Kyle");
 
-INSERT INTO casting_data (actor_name, movie_name)
+INSERT INTO casting_data (movie_name, actor_name)
 VALUES
 ("Batman Begins", "Christian Bale"),
 ("Batman Begins", "Michael Caine"),
@@ -182,7 +183,6 @@ VALUES
 ("The Dark Knight Rises", "AnneHathaway");
 
 
-
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
@@ -190,7 +190,7 @@ VALUES
 
 -- The SQL statement for the movies output
 -- TODO!
-SELECT * FROM movie_data;
+SELECT title_movie, movie_year, MPAA_rating, studio_name FROM movie_data;
 
 -- Prints a header for the cast output
 .print ""
@@ -201,4 +201,6 @@ SELECT * FROM movie_data;
 
 -- The SQL statement for the cast output
 -- TODO!
-SELECT * FROM casting_data;
+ SELECT movie_name, casting_data.actor_name, character_name
+ FROM actor_data INNER JOIN casting_data ON casting_data.actor_name = actor_data.actor_nm
+ ;
